@@ -18,16 +18,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'   # safe even without a lockfile; it will just skip caching
+          cache: 'pnpm'
 
-      - name: Enable Corepack (PNPM via package.json "packageManager")
-        run: corepack enable
-
-      - name: Show PNPM version
-        run: pnpm -v
+      - name: Enable Corepack and install PNPM
+        run: |
+          corepack enable
+          corepack prepare pnpm@9.1.0 --activate
+          pnpm -v
 
       - name: Install dependencies
-        # allow install even if pnpm-lock.yaml is not present yet
         run: pnpm install --no-frozen-lockfile
 
       - name: Lint (web)
