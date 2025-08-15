@@ -18,28 +18,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'   # will be effective once pnpm-lock.yaml is committed
 
-      - name: Install pnpm globally
+      - name: Show Node, npm
         run: |
-          npm i -g pnpm@9.1.0
-          pnpm -v
+          node -v
+          npm -v
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: npx pnpm@9.1.0 install --no-frozen-lockfile
 
       - name: Lint (web)
-        run: pnpm --filter @basket/web lint
+        run: npx pnpm@9.1.0 --filter @basket/web lint
 
       - name: Typecheck (web)
-        run: pnpm --filter @basket/web typecheck
+        run: npx pnpm@9.1.0 --filter @basket/web typecheck
 
       - name: Test (web)
         env:
           CI: "true"
-        run: pnpm --filter @basket/web test -- --ci
+        run: npx pnpm@9.1.0 --filter @basket/web test -- --ci
 
       - name: Build (web)
         env:
           NEXT_TELEMETRY_DISABLED: "1"
-        run: pnpm --filter @basket/web build
+        run: npx pnpm@9.1.0 --filter @basket/web build

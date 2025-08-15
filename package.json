@@ -1,12 +1,12 @@
 {
-    "name": "basket-coach",
-    "private": true,
-    "packageManager": "pnpm@9.1.0",
-    "scripts": {
-      "dev": "pnpm --filter @basket/web dev",
-      "build": "pnpm -r build",
-      "test": "pnpm -r test",
-      "lint": "pnpm -r lint",
-      "typecheck": "pnpm -r typecheck"
-    }
+  "name": "basket-coach",
+  "private": true,
+  "packageManager": "pnpm@9.1.0",
+  "scripts": {
+    "dev": "pnpm --filter @basket/web dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
   }
+}

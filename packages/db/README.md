@@ -1,0 +1,1 @@
+This package will hold generated Supabase TypeScript types and RPC helpers.

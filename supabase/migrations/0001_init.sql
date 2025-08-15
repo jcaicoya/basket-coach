@@ -137,7 +137,7 @@ create table if not exists public.notifications (
   read_at timestamptz
 );
 
--- === Auth linkage ===
+-- Auth linkage
 create or replace function public.handle_new_user()
 returns trigger language plpgsql as $$
 begin
@@ -151,7 +151,6 @@ create or replace function public.uid() returns uuid language sql stable as $$
   select auth.uid();
 $$;
 
--- attach trigger if not exists
 DO $$
 BEGIN
   IF NOT EXISTS (
@@ -163,7 +162,7 @@ BEGIN
   END IF;
 END$$;
 
--- === RLS enablement ===
+-- RLS enablement
 alter table public.tenants enable row level security;
 alter table public.memberships enable row level security;
 alter table public.teams enable row level security;
@@ -175,7 +174,7 @@ alter table public.events enable row level security;
 alter table public.attachments enable row level security;
 alter table public.activity_log enable row level security;
 
--- helper
+-- helpers
 create or replace function public.is_tenant_member(tid uuid)
 returns boolean language sql stable as $$
   select exists (select 1 from public.memberships m where m.tenant_id = tid and m.user_id = auth.uid());
@@ -189,7 +188,7 @@ returns boolean language sql stable as $$
   );
 $$;
 
--- policies (read)
+-- read policies
 create policy if not exists "tenant members can select" on public.tenants
 for select using (exists (
   select 1 from public.memberships m where m.tenant_id = tenants.id and m.user_id = auth.uid()
@@ -207,7 +206,7 @@ create policy if not exists "read events by tenant" on public.events for select 
 create policy if not exists "read attachments by tenant" on public.attachments for select using (public.is_tenant_member(tenant_id));
 create policy if not exists "read activity log by tenant" on public.activity_log for select using (public.is_tenant_member(tenant_id));
 
--- policies (write)
+-- write policies
 create policy if not exists "write teams" on public.teams for insert with check (public.can_write(tenant_id));
 create policy if not exists "update teams" on public.teams for update using (public.can_write(tenant_id));
 
