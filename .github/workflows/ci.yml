@@ -18,12 +18,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'pnpm'   # will be effective once pnpm-lock.yaml is committed
 
-      - name: Enable Corepack and install PNPM
+      - name: Install pnpm globally
         run: |
-          corepack enable
-          corepack prepare pnpm@9.1.0 --activate
+          npm i -g pnpm@9.1.0
           pnpm -v
 
       - name: Install dependencies
