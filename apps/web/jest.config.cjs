@@ -1,4 +1,4 @@
-// apps/web/jest.config.cjs
+// Jest config for Next.js app (CJS to avoid ESM conflicts)
 const nextJest = require('next/jest')
 
 const createJestConfig = nextJest({
