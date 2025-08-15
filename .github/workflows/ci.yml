@@ -14,17 +14,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup PNPM
-        # Do NOT specify a version here. It will read from package.json "packageManager"
-        uses: pnpm/action-setup@v4
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: 'pnpm'   # safe even without a lockfile; it will just skip caching
+
+      - name: Enable Corepack (PNPM via package.json "packageManager")
+        run: corepack enable
+
+      - name: Show PNPM version
+        run: pnpm -v
 
       - name: Install dependencies
+        # allow install even if pnpm-lock.yaml is not present yet
         run: pnpm install --no-frozen-lockfile
 
       - name: Lint (web)
