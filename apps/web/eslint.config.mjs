@@ -19,8 +19,6 @@ export default [
       parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module'
-        // If you later want type-aware rules, add:
-        // project: ['./tsconfig.json']
       },
       globals: {
         ...globals.browser,
@@ -40,6 +38,16 @@ export default [
 
       // Next.js Core Web Vitals (flat-compatible)
       ...nextPlugin.configs['core-web-vitals'].rules
+    }
+  },
+
+  // Jest test files: enable Jest globals (describe/it/expect)
+  {
+    files: ['**/*.test.{js,jsx,ts,tsx}', '**/__tests__/**/*.{js,jsx,ts,tsx}'],
+    languageOptions: {
+      globals: {
+        ...globals.jest
+      }
     }
   }
 ]
